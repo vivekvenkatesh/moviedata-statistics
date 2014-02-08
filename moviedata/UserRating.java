@@ -10,7 +10,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class UserRating {
 	
-	
 	public static class Map extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
 		/* 
 		 * The Key here is the UserId and the value is the number of the movies that the user has rated
@@ -49,7 +48,6 @@ public class UserRating {
 		 */
 		
 		int n = 30;
-		
 		public void reduce(IntWritable userId, Iterable<IntWritable> values, Context context) 
 				throws IOException, InterruptedException {
 			Configuration conf = context.getConfiguration();
