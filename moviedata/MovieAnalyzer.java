@@ -5,6 +5,7 @@ import java.io.IOException;
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.fs.Path;
 import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.NullWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -46,12 +47,12 @@ public class MovieAnalyzer {
 				conf.set("title", args[3]);
 				Job job = new Job(conf, "movieGenre");
 
-				job.setOutputKeyClass(Text.class);
+				job.setOutputKeyClass(NullWritable.class);
 				job.setOutputValueClass(Text.class);
 				job.setJarByClass(MovieAnalyzer.class);
 				job.setMapperClass(MovieGenre.Map.class);
 				//job.setCombinerClass(MovieGenre.Reduce.class);
-				//job.setReducerClass(MovieGenre.Reduce.class);
+				job.setReducerClass(MovieGenre.Reduce.class);
 
 				job.setInputFormatClass(TextInputFormat.class);
 				job.setOutputFormatClass(TextOutputFormat.class);
