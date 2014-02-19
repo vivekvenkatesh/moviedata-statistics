@@ -62,6 +62,47 @@ public class MovieAnalyzer {
 
 				job.waitForCompletion(true);
 			}
+			else if (args[2].equals("TopTenZip")) {
+				Configuration conf = new Configuration();
+				Job job = new Job(conf, "ageZipCode");
+
+				job.setOutputKeyClass(Text.class);
+				job.setOutputValueClass(AgeAverageCountTuple.class);
+				job.setJarByClass(MovieAnalyzer.class);
+				job.setMapperClass(AgeZipCode.Map.class);
+				job.setReducerClass(AgeZipCode.Reduce.class);
+
+				job.setInputFormatClass(TextInputFormat.class);
+				job.setOutputFormatClass(TextOutputFormat.class);
+
+				FileInputFormat.addInputPath(job, new Path(args[0]));
+				FileOutputFormat.setOutputPath(job, new Path(args[1]));
+				
+				// WHEN USING JOB2 (MAKE SURE YOU SPECIFY THE NUMBER OF REDUCER TASKS TO 1 to find top 10 zipcodes
+				// IMPORTANT!!!!!!!!!!
+				
+				if(job.waitForCompletion(true)) {
+					Configuration conf1 = new Configuration();
+					Job job1 = new Job(conf1, "topTenZipCode");
+
+					//job1.setMapOutputKeyClass(NullWritable.class);
+					//job1.setMapOutputValueClass(AgeAverageCountTuple.class);
+					job1.setOutputKeyClass(NullWritable.class);
+					//job1.setOutputValueClass(Text.class);
+					job1.setOutputValueClass(AgeAverageCountTuple.class);
+					job1.setJarByClass(MovieAnalyzer.class);
+					job1.setNumReduceTasks(1); /// Important!!!
+					job1.setMapperClass(TopTenZipCode.Map.class);
+					job1.setReducerClass(TopTenZipCode.Reduce.class);
+					 
+					job1.setInputFormatClass(TextInputFormat.class);
+					job1.setOutputFormatClass(TextOutputFormat.class);
+
+					FileInputFormat.addInputPath(job1, new Path(args[1]));
+					FileOutputFormat.setOutputPath(job1, new Path(args[3]));
+					job1.waitForCompletion(true);
+				}
+			}
 		}
 		else {
 			System.out.println("Expecting three input arguments! <Input Path><Output Path><n value>");
