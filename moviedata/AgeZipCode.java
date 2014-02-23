@@ -1,3 +1,10 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * First Map Reduce Job in Chaining to find the Top Ten Zipcodes. 
+ */
 package moviedata;
 
 import java.io.IOException;

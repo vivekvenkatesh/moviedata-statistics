@@ -1,3 +1,11 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * Second Map reduce job in the chaining to find the Top Ten Zipcodes
+ * 
+ */
 package moviedata;
 
 import java.io.IOException;
@@ -13,7 +21,6 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class TopTenZipCode {
 	public static class Map extends Mapper<LongWritable, Text, NullWritable, AgeAverageCountTuple> {
 		private AgeAverageCountTuple age = new AgeAverageCountTuple();
-		//private TreeMap<Double, AgeAverageCountTuple> top10Zip = new TreeMap<Double, AgeAverageCountTuple>();
 		private TreeSet<AgeAverageCountTuple> top10Zip = new TreeSet<AgeAverageCountTuple>(); 
 		public AgeAverageCountTuple transformStringToTuple(String word, Text zip) {
 			AgeAverageCountTuple output = new AgeAverageCountTuple();
@@ -29,11 +36,6 @@ public class TopTenZipCode {
 			String line = value.toString();
 			String tokens[] = line.split("\t");
 			age = transformStringToTuple(tokens[1], new Text(tokens[0]) ); 
-
-			/*top10Zip.put(age.getAverage(), age);
-			if(top10Zip.size() > 10) {
-				top10Zip.remove(top10Zip.lastKey());
-			}*/
 			top10Zip.add(age); 
 			if(top10Zip.size() > 10) {
 				top10Zip.remove(top10Zip.last());

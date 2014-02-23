@@ -1,3 +1,11 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * Find the users who have rated at least 'n' movies
+ * 
+ */
 package moviedata;
 
 import java.io.IOException;
@@ -33,6 +41,8 @@ public class UserRating {
 	    			 * User Ids are in the range 1 and 6040
 	    			 * Movie Ids are in the range 1 and 3952
 	    			 * Ratings are on a 5 star scale 
+	    			 * 
+	    			 * TODO: Remove this range check if needed
 	    			 */
 	    			if((tempUserId >=1 && tempUserId <=6040) && (tempMovieId >= 1 && tempMovieId <=3952) && (tempRating >= 0 && tempRating <=5)) {
 	    				userId = tempUserId;
@@ -49,7 +59,7 @@ public class UserRating {
 		
 		/*
 		 * Simply count the number of times each user has rated for movies
-		 * If the count is greater than 30, then write the output
+		 * If the count is greater than n (specified as command line argument), then write the output
 		 */
 		
 		int n = 30;

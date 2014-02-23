@@ -1,3 +1,11 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * Find the movie genres of the titles specified by the users
+ * 
+ */
 package moviedata;
 
 import java.io.IOException;
@@ -20,18 +28,26 @@ public class MovieGenre {
 	    public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 	    	String line = value.toString();
 	    	String tokens[] = line.split("::");
-	    	String tempTitle = tokens[1];
-	    	String tempGenre = tokens[2];
-	    	Configuration conf = context.getConfiguration();
-	    	String userTitles[] = conf.get("title").split(",");
-	    	
-	    	for(int i = 0; i<userTitles.length ; i++) {
-	    		if(userTitles[i].equalsIgnoreCase(tempTitle)) {
-	    			//movieTitle = new Text(tempTitle);
-		    		movieTitle = NullWritable.get(); 
-	    			movieGenre = new Text(tempGenre);
-		    		context.write(movieTitle, movieGenre);
-		    		break;
+	    	/*
+	    	 * Check if it is a valid record of format MovieID::MovieName::Genre
+	    	 */
+	    	if(tokens.length == 3) {
+	    		String tempTitle = tokens[1];
+	    		String tempGenre = tokens[2];
+	    		Configuration conf = context.getConfiguration();
+	    		String userTitles[] = conf.get("title").split("::");
+
+	    		for(int i = 0; i<userTitles.length ; i++) {
+	    			//if(userTitles[i].equalsIgnoreCase(tempTitle)) {
+	    			if(tempTitle.contains(userTitles[i])) {
+	    				movieTitle = NullWritable.get(); 
+	    				movieGenre = new Text(tempGenre);
+	    				context.write(movieTitle, movieGenre);
+	    				/*
+	    				 * Come out once you have found the title's Genre
+	    				 */
+	    				break;
+	    			}
 	    		}
 	    	}
 	    	

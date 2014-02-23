@@ -1,3 +1,11 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * Main Class to create the appropriate Map Reduce Jobs based on the User Input
+ * 
+ */
 package moviedata;
 
 import java.io.IOException;
@@ -16,7 +24,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 public class MovieAnalyzer {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+		
 		if(args.length == 4) {
 			if(args[2].equals("UserRating")) {
 				Configuration conf = new Configuration();   
@@ -61,7 +69,7 @@ public class MovieAnalyzer {
 				FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
 				job.waitForCompletion(true);
-			}
+			} // End of Movie Genre job
 			else if (args[2].equals("TopTenZip")) {
 				Configuration conf = new Configuration();
 				Job job = new Job(conf, "ageZipCode");
@@ -78,20 +86,13 @@ public class MovieAnalyzer {
 				FileInputFormat.addInputPath(job, new Path(args[0]));
 				FileOutputFormat.setOutputPath(job, new Path(args[1]));
 				
-				// WHEN USING JOB2 (MAKE SURE YOU SPECIFY THE NUMBER OF REDUCER TASKS TO 1 to find top 10 zipcodes
-				// IMPORTANT!!!!!!!!!!
-				
 				if(job.waitForCompletion(true)) {
 					Configuration conf1 = new Configuration();
 					Job job1 = new Job(conf1, "topTenZipCode");
-
-					//job1.setMapOutputKeyClass(NullWritable.class);
-					//job1.setMapOutputValueClass(AgeAverageCountTuple.class);
 					job1.setOutputKeyClass(NullWritable.class);
-					//job1.setOutputValueClass(Text.class);
 					job1.setOutputValueClass(AgeAverageCountTuple.class);
 					job1.setJarByClass(MovieAnalyzer.class);
-					job1.setNumReduceTasks(1); /// Important!!!
+					job1.setNumReduceTasks(1); 
 					job1.setMapperClass(TopTenZipCode.Map.class);
 					job1.setReducerClass(TopTenZipCode.Reduce.class);
 					 
@@ -102,10 +103,10 @@ public class MovieAnalyzer {
 					FileOutputFormat.setOutputPath(job1, new Path(args[3]));
 					job1.waitForCompletion(true);
 				}
-			}
+			}// End of TopTenZip job
 		}
 		else {
-			System.out.println("Expecting three input arguments! <Input Path><Output Path><n value>");
+			System.out.println("Expecting three input arguments! <Input Path><Output Path><n value | Movie Titles> \n (or) <Input Path><Output Path 1> TopTenZip <Output Path 2>");
 		}
 	}
 

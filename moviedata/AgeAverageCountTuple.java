@@ -1,3 +1,10 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Description
+ * -----------
+ * Custom Writable Class 'AgeAverageCountTuple' for Average Age Count
+ */
 package moviedata;
 
 import java.io.DataInput;
