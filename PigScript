@@ -1,0 +1,25 @@
+
+1. Find the user ids who have rated at least 30 Movies
+------------------------------------------------------
+users = LOAD '/Users/vivek/Documents/pig/ratings.dat' USING PigStorage(',') as (uid:int,mid:int,ratings:int,timestamp:chararray); 
+group_by_uid = group users by uid; 
+total_ratings = FOREACH group_by_uid GENERATE group, COUNT(users) as counter; 
+users_with_30_ratings = FILTER total_ratings by counter >= 30;
+dump users_with_30_ratings;
+
+// Check the count of records generated
+
+group_all = GROUP users_with_30_ratings ALL;
+sum_all = FOREACH group_all GENERATE COUNT(users_with_30_ratings.$1 );
+
+
+3. Find the Top Ten Youngest age ZipCodes in descending order 
+-------------------------------------------------------------
+
+users = LOAD '/Users/vivek/Documents/pig/users.dat' USING PigStorage(',') as (uid:int,gender:chararray,age:int,occupation:chararray,zipcode:chararray);
+group_by_zipcode = group users by zipcode; 
+average_by_zipcode = FOREACH group_by_zipcode GENERATE group, AVG(users.age) as age;
+youngest_sort = ORDER average_by_zipcode BY age, group ASC;
+top10 = LIMIT youngest_sort 10;
+final = ORDER top10 by age, group DESC;
+dump final;
