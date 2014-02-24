@@ -27,6 +27,9 @@ public class MovieAnalyzer {
 		
 		if(args.length == 4) {
 			if(args[2].equals("UserRating")) {
+				/*
+				 * Find the user ids who have rated at least 'n' movies
+				 */
 				Configuration conf = new Configuration();   
 
 				if (args[3].matches("^\\d+$")) {
@@ -51,15 +54,19 @@ public class MovieAnalyzer {
 				job.waitForCompletion(true);
 			} // End of UserRating job
 			else if (args[2].equals("MovieGenre")) {
+				/*
+				 * Display the list of Genres with input given as Command Line Arguments separated by ::
+				 */
 				Configuration conf = new Configuration();
 				conf.set("title", args[3]);
 				Job job = new Job(conf, "movieGenre");
-
-				job.setOutputKeyClass(NullWritable.class);
-				job.setOutputValueClass(Text.class);
+				
+				job.setMapOutputKeyClass(Text.class);
+				job.setMapOutputValueClass(IntWritable.class);
+				job.setOutputKeyClass(Text.class);
+				job.setOutputValueClass(NullWritable.class);
 				job.setJarByClass(MovieAnalyzer.class);
 				job.setMapperClass(MovieGenre.Map.class);
-				//job.setCombinerClass(MovieGenre.Reduce.class);
 				job.setReducerClass(MovieGenre.Reduce.class);
 
 				job.setInputFormatClass(TextInputFormat.class);
@@ -71,10 +78,15 @@ public class MovieAnalyzer {
 				job.waitForCompletion(true);
 			} // End of Movie Genre job
 			else if (args[2].equals("TopTenZip")) {
+				/*
+				 * Chaining Jobs to compute the top ten zipcodes based on the user age
+				 */
 				Configuration conf = new Configuration();
 				Job job = new Job(conf, "ageZipCode");
-
-				job.setOutputKeyClass(Text.class);
+				
+				job.setMapOutputKeyClass(Text.class);
+				job.setMapOutputValueClass(AgeAverageCountTuple.class);
+				job.setOutputKeyClass(NullWritable.class);
 				job.setOutputValueClass(AgeAverageCountTuple.class);
 				job.setJarByClass(MovieAnalyzer.class);
 				job.setMapperClass(AgeZipCode.Map.class);
@@ -86,6 +98,9 @@ public class MovieAnalyzer {
 				FileInputFormat.addInputPath(job, new Path(args[0]));
 				FileOutputFormat.setOutputPath(job, new Path(args[1]));
 				
+				/*
+				 * Start the second job once the first job completes
+				 */
 				if(job.waitForCompletion(true)) {
 					Configuration conf1 = new Configuration();
 					Job job1 = new Job(conf1, "topTenZipCode");
@@ -106,7 +121,7 @@ public class MovieAnalyzer {
 			}// End of TopTenZip job
 		}
 		else {
-			System.out.println("Expecting three input arguments! <Input Path><Output Path><n value | Movie Titles> \n (or) <Input Path><Output Path 1> TopTenZip <Output Path 2>");
+			System.out.println("Expecting four input arguments! <Input Path><Output Path><UserRating | MovieGenre><'n value' | 'Movie Titles separated by ::'> \n (or) <Input Path><Output Path 1> TopTenZip <Output Path 2>");
 		}
 	}
 

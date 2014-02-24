@@ -97,10 +97,10 @@
 14/02/22 18:43:48 INFO mapred.JobClient:     Map output records=2
 
 {cs6360:~} hadoop fs -cat /user/vxg120430/output5/*
-Musical
 Action
-Thriller
 Drama
+Musical
+Thriller
 
 3. Find the Top Ten Youngest age ZipCodes in descending order 
 -------------------------------------------------------------

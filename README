@@ -19,7 +19,9 @@ If executing through the submitted JAR file, you need not specify the Class Name
 
 $hadoop jar MovieAnalyzer.jar <input_path> <output_path> <UserRating | MovieGenre> <n | movie_titles> 
 	where UserRating displays the users who have rated at least 'n' movies 
-		  MovieGenre displays the Genres of all movies specified in the movie_titles (Please separate the movie tiles by ::)
+		  MovieGenre displays the Genres of all movies specified in the movie_titles 
+		  (IMPORTANT!!! : Please separate the movie tiles by :: and give them within "" in command line arguments)
+		  Refer the example below. 
 
 $hadoop jar MovieAnalyzer.jar <input_path> <output_path1> <TopTenZip> <output_path2>
 
@@ -44,8 +46,8 @@ Expected Output:
  
 Action
 Drama
-Thriller
 Musical
+Thriller
 
 3. Find the Top Ten Youngest age ZipCodes in descending order 
 -------------------------------------------------------------
