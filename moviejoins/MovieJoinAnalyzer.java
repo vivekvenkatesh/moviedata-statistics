@@ -44,7 +44,7 @@ public class MovieJoinAnalyzer {
 					job1.setOutputValueClass(UserTuple.class);
 					job1.setJarByClass(MovieJoinAnalyzer.class);
 					job1.setMapperClass(UserRatingJoin.UserRatingJoinMapper.class);
-					
+					job1.setNumReduceTasks(1);
 					job1.setInputFormatClass(TextInputFormat.class);
 					job1.setOutputFormatClass(TextOutputFormat.class);
 
