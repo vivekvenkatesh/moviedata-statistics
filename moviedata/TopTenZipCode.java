@@ -81,6 +81,7 @@ public class TopTenZipCode {
 				throws IOException, InterruptedException {
 			// Get the top 10 youngest users zipcodes
 			Iterator<AgeAverageCountTuple> itrr = values.iterator(); 
+			 
 			while(itrr.hasNext())  {
 				AgeAverageCountTuple itr = itrr.next(); 
 				Text temp = new Text(itr.toString());
