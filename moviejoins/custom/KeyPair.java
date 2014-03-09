@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Custom Key for Reduce Join Mapper
+ * 
+ */
 package moviejoins.custom;
 
 import java.io.DataInput;

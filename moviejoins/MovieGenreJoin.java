@@ -117,37 +117,7 @@ public class MovieGenreJoin {
 					}
 				}
 			}
-			/*for(Text val: values) {
-				if(val.charAt(0) == 'A') {
-					// This userIdList will only contain the list of Male Users
-					userIdList.add(Integer.parseInt(val.toString().substring(1)));
-				} else if(val.charAt(0) == 'B') {
-					// This moviesLiss will only contain the list of Action or Drama movies
-					String tokens[] = val.toString().substring(1).split("::");
-					moviesList.put(Integer.parseInt(tokens[0]), tokens[1] + "," + tokens[2]);
-					
-				} else if(val.charAt(0) == 'C') {
-					// Check if the userId and MovieId is present in userIdList and moviesList tuple
-					String tokens[] = val.toString().substring(1).split("::");
-					boolean tempUserIdPresent = userIdList.contains(Integer.parseInt(tokens[0]));
-					boolean tempMovieIdPresent = moviesList.containsKey(Integer.parseInt(tokens[1])); 
-					int tempMovieId = Integer.parseInt(tokens[1]); 
-					long tempMovieRating = Long.parseLong(tokens[2]); 
-					if(tempUserIdPresent && tempMovieIdPresent) {
-						boolean tempPresent = moviesRating.containsKey(tempMovieId);
-						if(tempPresent) {
-							MovieRatingTuple tuple = moviesRating.get(tempMovieId); 
-							tuple.setRatings(tempMovieRating);
-							moviesRating.put(tempMovieId, tuple); 
-						}
-						else {
-							MovieRatingTuple tuple = new MovieRatingTuple(); 
-							tuple.setRatings(tempMovieRating);
-							moviesRating.put(tempMovieId, tuple); 
-						}
-					}
-				}
-			}*/
+			
 			if(!userIdList.isEmpty() && !moviesList.isEmpty() && !moviesRating.isEmpty()) {
 				// Execute the logic here
 				Iterator<Integer> itr = moviesRating.keySet().iterator();

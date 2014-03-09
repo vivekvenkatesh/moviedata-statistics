@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Custom comparator for sorting the mapper output values that go to the reducer
+ * 
+ */
 package moviejoins.custom;
 
 import org.apache.hadoop.io.WritableComparable;

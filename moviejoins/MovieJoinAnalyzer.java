@@ -1,11 +1,6 @@
 package moviejoins;
 
 import java.io.IOException;
-import moviejoins.custom.KeyPair;
-
-import moviejoins.custom.CustomComparator;
-import moviejoins.custom.CustomPartitioner;
-
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.filecache.DistributedCache;
 import org.apache.hadoop.fs.Path;
@@ -23,7 +18,7 @@ public class MovieJoinAnalyzer {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
 		// TODO Auto-generated method stub
-		if(args.length == 5) {
+		if(args.length >= 5) {
 			if(args[2].equals("RatingCount")) {
 				Configuration conf = new Configuration();
 				Job job = new Job(conf, "ratingsCount");
@@ -64,6 +59,41 @@ public class MovieJoinAnalyzer {
 				Configuration conf = new Configuration();
 				Job job = new Job(conf, "movieGenre");
 
+				job.setOutputKeyClass(IntWritable.class);
+				job.setOutputValueClass(Text.class);
+				job.setJarByClass(MovieJoinAnalyzer.class);
+				
+				
+				MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, MovieRatingJoin.UserIdMapper.class);
+				//MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, MovieGenreJoin.MovieMapper.class);
+				MultipleInputs.addInputPath(job, new Path(args[2]), TextInputFormat.class, MovieRatingJoin.RatingsMapper.class);
+	
+				job.setReducerClass(MovieRatingJoin.MovieRatingJoinReducer.class);
+				job.setOutputFormatClass(TextOutputFormat.class);
+
+				FileOutputFormat.setOutputPath(job, new Path(args[4]));
+				
+				if(job.waitForCompletion(true)) {
+					Configuration conf1 = new Configuration();
+					Job job1 = new Job(conf1, "movieGenreChain");
+					job1.setMapOutputKeyClass(IntWritable.class);
+					job1.setMapOutputValueClass(Text.class);
+					job1.setOutputKeyClass(NullWritable.class);
+					job1.setOutputValueClass(Text.class);
+					job1.setJarByClass(MovieJoinAnalyzer.class);
+					
+					MultipleInputs.addInputPath(job1, new Path(args[1]), TextInputFormat.class, MovieRatingJoin1.MovieMapper.class);
+					MultipleInputs.addInputPath(job1, new Path(args[4]), TextInputFormat.class, MovieRatingJoin1.MovieRatingMapper.class);
+				
+					job1.setReducerClass(MovieRatingJoin1.MovieRatingJoin1Reducer.class);
+					job1.setOutputFormatClass(TextOutputFormat.class);
+
+					FileOutputFormat.setOutputPath(job1, new Path(args[5]));
+					job1.waitForCompletion(true); 
+				}
+				/*Configuration conf = new Configuration();
+				Job job = new Job(conf, "movieGenre");
+
 				//job.setOutputKeyClass(IntWritable.class);
 				job.setMapOutputKeyClass(KeyPair.class);
 				job.setMapOutputValueClass(Text.class);
@@ -71,8 +101,6 @@ public class MovieJoinAnalyzer {
 				job.setOutputKeyClass(NullWritable.class);
 				job.setOutputValueClass(Text.class);
 				job.setJarByClass(MovieJoinAnalyzer.class);
-				
-				//job.setNumReduceTasks(1);
 				
 				
 				MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, MovieGenreJoin.UserIdMapper.class);
@@ -82,10 +110,11 @@ public class MovieJoinAnalyzer {
 				job.setGroupingComparatorClass(CustomComparator.class);
 				job.setReducerClass(MovieGenreJoin.MovieGenreReducer.class);
 				job.setOutputFormatClass(TextOutputFormat.class);
+				job.setNumReduceTasks(1);
 
 				FileOutputFormat.setOutputPath(job, new Path(args[4]));
 				
-				job.waitForCompletion(true);
+				job.waitForCompletion(true);*/
 			}
 		}
 	} // End of Main

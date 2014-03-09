@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Custom partitioner for customizing the reducer to which the key goes
+ * 
+ */
 package moviejoins.custom;
 
 import org.apache.hadoop.io.Text;
