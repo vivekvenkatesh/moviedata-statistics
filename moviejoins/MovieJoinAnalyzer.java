@@ -65,7 +65,7 @@ public class MovieJoinAnalyzer {
 				
 				
 				MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, MovieRatingJoin.UserIdMapper.class);
-				//MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, MovieGenreJoin.MovieMapper.class);
+				
 				MultipleInputs.addInputPath(job, new Path(args[2]), TextInputFormat.class, MovieRatingJoin.RatingsMapper.class);
 	
 				job.setReducerClass(MovieRatingJoin.MovieRatingJoinReducer.class);
@@ -91,30 +91,7 @@ public class MovieJoinAnalyzer {
 					FileOutputFormat.setOutputPath(job1, new Path(args[5]));
 					job1.waitForCompletion(true); 
 				}
-				/*Configuration conf = new Configuration();
-				Job job = new Job(conf, "movieGenre");
 
-				//job.setOutputKeyClass(IntWritable.class);
-				job.setMapOutputKeyClass(KeyPair.class);
-				job.setMapOutputValueClass(Text.class);
-				
-				job.setOutputKeyClass(NullWritable.class);
-				job.setOutputValueClass(Text.class);
-				job.setJarByClass(MovieJoinAnalyzer.class);
-				
-				
-				MultipleInputs.addInputPath(job, new Path(args[0]), TextInputFormat.class, MovieGenreJoin.UserIdMapper.class);
-				MultipleInputs.addInputPath(job, new Path(args[1]), TextInputFormat.class, MovieGenreJoin.MovieMapper.class);
-				MultipleInputs.addInputPath(job, new Path(args[2]), TextInputFormat.class, MovieGenreJoin.RatingsMapper.class);
-				job.setPartitionerClass(CustomPartitioner.class);
-				job.setGroupingComparatorClass(CustomComparator.class);
-				job.setReducerClass(MovieGenreJoin.MovieGenreReducer.class);
-				job.setOutputFormatClass(TextOutputFormat.class);
-				job.setNumReduceTasks(1);
-
-				FileOutputFormat.setOutputPath(job, new Path(args[4]));
-				
-				job.waitForCompletion(true);*/
 			}
 		}
 	} // End of Main
