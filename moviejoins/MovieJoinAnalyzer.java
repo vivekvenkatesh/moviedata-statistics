@@ -1,3 +1,8 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Main Driver Code
+ */
 package moviejoins;
 
 import java.io.IOException;
@@ -17,7 +22,7 @@ import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
 public class MovieJoinAnalyzer {
 
 	public static void main(String[] args) throws IOException, InterruptedException, ClassNotFoundException {
-		// TODO Auto-generated method stub
+		
 		if(args.length >= 5) {
 			if(args[2].equals("RatingCount")) {
 				Configuration conf = new Configuration();
@@ -46,6 +51,7 @@ public class MovieJoinAnalyzer {
 					job1.setJarByClass(MovieJoinAnalyzer.class);
 					job1.setMapperClass(UserRatingJoin.UserRatingJoinMapper.class);
 					job1.setNumReduceTasks(1);
+					job1.setReducerClass(UserRatingJoin.UserRatingJoinReducer.class); 
 					job1.setInputFormatClass(TextInputFormat.class);
 					job1.setOutputFormatClass(TextOutputFormat.class);
 
@@ -55,7 +61,7 @@ public class MovieJoinAnalyzer {
 					job1.waitForCompletion(true);
 				}
 			}
-			else if(args[3].equals("MovieGenre")) {
+			else if(args[3].equals("MovieGenre") && args.length == 6) {
 				Configuration conf = new Configuration();
 				Job job = new Job(conf, "movieGenre");
 
@@ -93,6 +99,16 @@ public class MovieJoinAnalyzer {
 				}
 
 			}
+			else {
+				System.out.println("Enter one of the following valid arguments:");
+				System.out.println("hadoop jar MovieAnalyzer.jar <input path to ratings.dat> <output_path_1> RatingCount <input path to users.dat> <output_path_2> ");
+				System.out.println("hadoop jar MovieAnalyzer.jar <input path to users.dat> <input path to movies.dat> <input path to ratings.dat> MovieGenre <output_path1> <output_path2>"); 
+			}
+		}
+		else {
+			System.out.println("Enter one of the following valid arguments:");
+			System.out.println("hadoop jar MovieAnalyzer.jar <input path to ratings.dat> <output_path_1> RatingCount <input path to users.dat> <output_path_2> ");
+			System.out.println("hadoop jar MovieAnalyzer.jar <input path to users.dat> <input path to movies.dat> <input path to ratings.dat> MovieGenre <output_path1> <output_path2>"); 
 		}
 	} // End of Main
 

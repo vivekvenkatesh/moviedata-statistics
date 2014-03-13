@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Join User and Ratings File (Reduce Side Join)
+ * 
+ */
 package moviejoins;
 
 import java.io.IOException;
@@ -13,15 +19,17 @@ import org.apache.hadoop.mapreduce.Reducer;
 
 public class MovieRatingJoin {
 	/*
-	 * User Mapper will emit UserId as key and "U" + the entire line as value
-	 * Ratings Mapper will emit UserId as key and "R" + the entire line as value
+	 * User Mapper will emit UserId as key and "U" + UserId as value
+	 * Ratings Mapper will emit UserId as key and "R" + UserId, MovieId, Rating as value
 	 * 
-	 * Final Output will contain the list of movies rated by each male user
+	 * Final Output will contain the list of movies rated by each male user and their ratings
 	 */
 	
 	public static class UserIdMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
 		/*
 		 * Emit only UserIds that are Male
+		 * Output Key: UserId 
+		 * Output Value: U + UserId
 		 */
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			String line = value.toString(); 
@@ -37,7 +45,8 @@ public class MovieRatingJoin {
 	
 	public static class RatingsMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
 		/*
-		 * MovieId Key
+		 * Output Key: UserId
+		 * Output Value: R + UserId + MovieId + Rating
 		 */
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			String line = value.toString();
@@ -55,7 +64,6 @@ public class MovieRatingJoin {
 		/*
 		 * Input Key : IntWritable (UserId) 
 		 * Output Key : IntWritable (MovieId)
-		 * 
 		 * Output Value will contain MovieId (Key) and Rating as output value 
 		 */
 		Set<IntWritable> userTuple = new HashSet<IntWritable>(); 

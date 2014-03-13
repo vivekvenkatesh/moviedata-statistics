@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Join Movie file and the result of the join of user and ratings file (Reduce Side Join)
+ * 
+ */
 package moviejoins;
 
 import java.io.IOException;
@@ -12,7 +18,8 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class MovieRatingJoin1 {
 	public static class MovieMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
 		/*
-		 * MovieId Key
+		 * Output Key: MovieId
+		 * Output Value: M + Entire Record
 		 */
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			String line = value.toString();
@@ -29,7 +36,10 @@ public class MovieRatingJoin1 {
 	} // End of MovieMapper
 	
 	public static class MovieRatingMapper extends Mapper<LongWritable, Text, IntWritable, Text> {
-		
+		/*
+		 * Output Key: MovieId
+		 * Output Value: R + Rating
+		 */
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
 			String line = value.toString();
 			String tokens[] = line.split("\t");
@@ -80,12 +90,8 @@ public class MovieRatingJoin1 {
 					if(averageRating >= 4.4 && averageRating <= 4.7) {
 						String line = M.toString();
 						String tokens[] = line.split("::"); 
-						/*
-						 * TODO: Check why this is working
-						 */
-						//if(tokens.length == 3) {
 						context.write(NullWritable.get(), new Text(tokens[0] + "\t" + tokens[1] + "\t" + tokens[2] + "\t" + averageRating));
-						//}
+						
 					}
 				}
 			}

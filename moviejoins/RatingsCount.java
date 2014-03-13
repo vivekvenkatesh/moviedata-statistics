@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Compute the total ratings of each user
+ * 
+ */
 package moviejoins;
 
 import java.io.IOException;
@@ -11,11 +17,17 @@ import org.apache.hadoop.mapreduce.Reducer;
 public class RatingsCount {
 	
 	/*
-	 * Count the ratings of each user and emit them (read the ratings.dat) 
+	 * Count the number of movies each user has rated and emit them (read the ratings.dat) 
 	 * 
 	 */
 	public static class RatingsCountMapper extends Mapper<LongWritable, Text, IntWritable, IntWritable> {
-		
+		/*
+		 * Input Key - LongWritable
+		 * Input Value - Text
+		 * Output Key - IntWritable(UserId)
+		 * Output Value - IntWritable (1) 
+		 * 
+		 */
 		private IntWritable userIdOutput;
 		private IntWritable countOutput; 
 		
@@ -37,7 +49,13 @@ public class RatingsCount {
 	} // End of Mapper
 	
 	public static class RatingsCountReducer extends Reducer<IntWritable, IntWritable, IntWritable, IntWritable> {
-		
+		/*
+		 * Input Key - UserId
+		 * Input Value - (Ratings Count for the User) 
+		 * Output Key - UserId
+		 * Output Key - Total number of movies rated by the User
+		 * 
+		 */
 		public void reduce(IntWritable userId, Iterable<IntWritable> values, Context context) 
 				throws IOException, InterruptedException {
 			int ratingCount = 0;

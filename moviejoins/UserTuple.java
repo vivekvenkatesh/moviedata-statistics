@@ -1,3 +1,9 @@
+/**
+ * @author Vivek Venkatesh Ganesan
+ * 
+ * Custom Writable UserTuple
+ * 
+ */
 package moviejoins;
 
 import java.io.DataInput;
@@ -60,7 +66,6 @@ public class UserTuple implements WritableComparable<UserTuple>{
 	}
 	@Override
 	public void readFields(DataInput in) throws IOException {
-		// TODO Auto-generated method stub
 		userId = in.readInt(); 
 		age = in.readDouble();
 		gender = in.readChar();
@@ -69,7 +74,6 @@ public class UserTuple implements WritableComparable<UserTuple>{
 
 	@Override
 	public void write(DataOutput out) throws IOException {
-		// TODO Auto-generated method stub
 		out.writeInt(userId);
 		out.writeDouble(age);
 		out.writeChar(gender);
@@ -116,7 +120,7 @@ public class UserTuple implements WritableComparable<UserTuple>{
 	}
 	
 	public String toString() {
-		return (userId + "," + age + "," + gender + "," + ratingsCount);
+		return (userId + "\t" + age + "\t" + gender + "\t" + ratingsCount);
 	}
 
 }
