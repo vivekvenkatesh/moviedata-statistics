@@ -1,5 +1,3 @@
-(Readme for HW #1)
-
 ============================================
 MapReduce program to analyze a Movie Dataset
 ============================================
@@ -14,6 +12,12 @@ Q2. Given some movie titles - find all the genres of the movies. (Taking the mov
 
 Q3. Find the top 10 zipcodes based on the avarage age of users belong to that zipcode, in the descending order of the avarage age. Top 10 means the youngest 10 avarage age of users of that zipcode. (Use of Chaining of two map-reduce job is a must here.) [use only users.dat as input file]
 
+JOINS
+=====
+
+Q4. Implement the query using map side join : Find the top 10 users (userID, age,gender) who has rated most number of movies in descending order of the counts.
+
+Q5. List all the movies with its genre where the movie genre is Action or Drama and the average movie rating is in between 4.4-4.7 and only the male users rate the movie.(This is reduce side join).
 
 INPUT TO THE MAP REDUCE CODE
 ============================
@@ -31,29 +35,31 @@ $hadoop jar MovieAnalyzer.jar <input_path> <output_path1> <TopTenZip> <output_pa
 	where output_path1 is the output path of the 1st job in the chaining
 		  output_path2 is the output path of the 2nd job in the chaining	  
 
+$hadoop jar MovieAnalyzer.jar <input path to ratings.dat> <output_path_1> RatingCount <input path to users.dat> <output_path_2> 
+
+$hadoop jar MovieAnalyzer.jar <input path to users.dat> <input path to movies.dat> <input path to ratings.dat> MovieGenre <output_path1> <output_path2> 
+
 Example:
 -------
 1. Find the user ids who have rated at least 30 Movies
 ------------------------------------------------------
-
 $hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/ratings.dat /user/vxg120430/output UserRating 30
 
 2. Find the Genres of the movie titles "Dancer in the Dark (2000)::Get Carter (2000)"
 -------------------------------------------------------------------------------------
-
 (Remember to use quotes in the command line argument. Because of the spaces in the input)
 
 $hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/movies.dat /user/vxg120430/output1 MovieGenre "Dancer in the Dark (2000)::Get Carter (2000)"
-
-Expected Output:
- 
-Action
-Drama
-Musical
-Thriller
 
 3. Find the Top Ten Youngest age ZipCodes in descending order 
 -------------------------------------------------------------
 $hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/users.dat /user/vxg120430/output2 TopTenZip /user/vxg120430/output3
 
+4. Map Side Join
+----------------
+$hadoop jar MovieJoinAnalyzer.jar /Spring2014_HW-1/input_HW-1/ratings.dat /user/vxg120430/output RatingCount /Spring2014_HW-1/input_HW-1/users.dat /user/vxg120430/output1
+
+5. Reduce Side Join
+-------------------
+$hadoop jar MovieJoinAnalyzer.jar /Spring2014_HW-1/input_HW-1/users.dat /Spring2014_HW-1/input_HW-1/movies.dat /Spring2014_HW-1/input_HW-1/ratings.dat MovieGenre /user/vxg120430/output2 /user/vxg120430/output3
 

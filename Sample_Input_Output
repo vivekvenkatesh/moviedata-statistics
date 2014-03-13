@@ -1,6 +1,4 @@
-(Sample Input Output for HW #1)
-
-1. Find the Users who have rated at least 30 Movies
+Q1. Find the Users who have rated at least 30 Movies
 ---------------------------------------------------
 
 {cs6360:~} hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/ratings.dat /user/vxg120430/output4 UserRating 30
@@ -50,7 +48,7 @@
 14/02/22 18:39:38 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=2106925056
 14/02/22 18:39:38 INFO mapred.JobClient:     Map output records=1000209
 
-2. Find the Genres of the movie titles "Dancer in the Dark (2000)::Get Carter (2000)"
+Q2. Find the Genres of the movie titles "Dancer in the Dark (2000)::Get Carter (2000)"
 -------------------------------------------------------------------------------------
 {cs6360:~} hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/movies.dat /user/vxg120430/output5 MovieGenre "Dancer in the Dark (2000)::Get Carter (2000)"
 14/02/22 18:42:10 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
@@ -104,7 +102,7 @@ Drama
 Musical
 Thriller
 
-3. Find the Top Ten Youngest age ZipCodes in descending order 
+Q3. Find the Top Ten Youngest age ZipCodes in descending order 
 -------------------------------------------------------------
 $hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/users.dat /user/vxg120430/output6 TopTenZip /user/vxg120430/output7
 
@@ -208,3 +206,233 @@ $hadoop jar MovieAnalyzer.jar /Spring2014_HW-1/input_HW-1/users.dat /user/vxg120
 1.0,01597
 1.0,01036
 1.0,00681
+
+
+Q4.Implement the query using map side join :
+============================================
+Find the top 10 users (userID, age, gender) who has rated most number of movies in descending order of the counts.
+
+{cs6360:~} hadoop jar MovieJoinAnalyzer.jar /Spring2014_HW-1/input_HW-1/ratings.dat /user/vxg120430/output RatingCount /Spring2014_HW-1/input_HW-1/users.dat /user/vxg120430/output1
+14/03/11 12:34:56 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/03/11 12:34:56 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 12:34:56 INFO util.NativeCodeLoader: Loaded the native-hadoop library
+14/03/11 12:34:56 WARN snappy.LoadSnappy: Snappy native library not loaded
+14/03/11 12:34:56 INFO mapred.JobClient: Running job: job_201402251659_5939
+14/03/11 12:34:57 INFO mapred.JobClient:  map 0% reduce 0%
+14/03/11 12:35:03 INFO mapred.JobClient:  map 100% reduce 0%
+14/03/11 12:35:10 INFO mapred.JobClient:  map 100% reduce 33%
+14/03/11 12:35:12 INFO mapred.JobClient:  map 100% reduce 100%
+14/03/11 12:35:12 INFO mapred.JobClient: Job complete: job_201402251659_5939
+14/03/11 12:35:12 INFO mapred.JobClient: Counters: 29
+14/03/11 12:35:12 INFO mapred.JobClient:   Job Counters 
+14/03/11 12:35:12 INFO mapred.JobClient:     Launched reduce tasks=1
+14/03/11 12:35:12 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=6347
+14/03/11 12:35:12 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/03/11 12:35:12 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/03/11 12:35:12 INFO mapred.JobClient:     Rack-local map tasks=1
+14/03/11 12:35:12 INFO mapred.JobClient:     Launched map tasks=1
+14/03/11 12:35:12 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=8339
+14/03/11 12:35:12 INFO mapred.JobClient:   File Output Format Counters 
+14/03/11 12:35:12 INFO mapred.JobClient:     Bytes Written=50199
+14/03/11 12:35:12 INFO mapred.JobClient:   FileSystemCounters
+14/03/11 12:35:12 INFO mapred.JobClient:     FILE_BYTES_READ=120860
+14/03/11 12:35:12 INFO mapred.JobClient:     HDFS_BYTES_READ=24594251
+14/03/11 12:35:12 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=296403
+14/03/11 12:35:12 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=50199
+14/03/11 12:35:12 INFO mapred.JobClient:   File Input Format Counters 
+14/03/11 12:35:12 INFO mapred.JobClient:     Bytes Read=24594131
+14/03/11 12:35:12 INFO mapred.JobClient:   Map-Reduce Framework
+14/03/11 12:35:12 INFO mapred.JobClient:     Map output materialized bytes=60406
+14/03/11 12:35:12 INFO mapred.JobClient:     Map input records=1000209
+14/03/11 12:35:12 INFO mapred.JobClient:     Reduce shuffle bytes=60406
+14/03/11 12:35:12 INFO mapred.JobClient:     Spilled Records=18123
+14/03/11 12:35:12 INFO mapred.JobClient:     Map output bytes=8001672
+14/03/11 12:35:12 INFO mapred.JobClient:     CPU time spent (ms)=6720
+14/03/11 12:35:12 INFO mapred.JobClient:     Total committed heap usage (bytes)=593625088
+14/03/11 12:35:12 INFO mapred.JobClient:     Combine input records=1006252
+14/03/11 12:35:12 INFO mapred.JobClient:     SPLIT_RAW_BYTES=120
+14/03/11 12:35:12 INFO mapred.JobClient:     Reduce input records=6040
+14/03/11 12:35:12 INFO mapred.JobClient:     Reduce input groups=6040
+14/03/11 12:35:12 INFO mapred.JobClient:     Combine output records=12083
+14/03/11 12:35:12 INFO mapred.JobClient:     Physical memory (bytes) snapshot=486653952
+14/03/11 12:35:12 INFO mapred.JobClient:     Reduce output records=6040
+14/03/11 12:35:12 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=2106785792
+14/03/11 12:35:12 INFO mapred.JobClient:     Map output records=1000209
+14/03/11 12:35:12 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/03/11 12:35:12 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 12:35:13 INFO mapred.JobClient: Running job: job_201402251659_5940
+14/03/11 12:35:14 INFO mapred.JobClient:  map 0% reduce 0%
+14/03/11 12:35:17 INFO mapred.JobClient:  map 100% reduce 0%
+14/03/11 12:35:24 INFO mapred.JobClient:  map 100% reduce 33%
+14/03/11 12:35:26 INFO mapred.JobClient:  map 100% reduce 100%
+14/03/11 12:35:26 INFO mapred.JobClient: Job complete: job_201402251659_5940
+14/03/11 12:35:26 INFO mapred.JobClient: Counters: 29
+14/03/11 12:35:26 INFO mapred.JobClient:   Job Counters 
+14/03/11 12:35:26 INFO mapred.JobClient:     Launched reduce tasks=1
+14/03/11 12:35:26 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=3280
+14/03/11 12:35:26 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/03/11 12:35:26 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/03/11 12:35:26 INFO mapred.JobClient:     Rack-local map tasks=1
+14/03/11 12:35:26 INFO mapred.JobClient:     Launched map tasks=1
+14/03/11 12:35:26 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=8113
+14/03/11 12:35:26 INFO mapred.JobClient:   File Output Format Counters 
+14/03/11 12:35:26 INFO mapred.JobClient:     Bytes Written=169
+14/03/11 12:35:26 INFO mapred.JobClient:   FileSystemCounters
+14/03/11 12:35:26 INFO mapred.JobClient:     FILE_BYTES_READ=206
+14/03/11 12:35:26 INFO mapred.JobClient:     HDFS_BYTES_READ=50315
+14/03/11 12:35:26 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=116907
+14/03/11 12:35:26 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=169
+14/03/11 12:35:26 INFO mapred.JobClient:   File Input Format Counters 
+14/03/11 12:35:26 INFO mapred.JobClient:     Bytes Read=50199
+14/03/11 12:35:26 INFO mapred.JobClient:   Map-Reduce Framework
+14/03/11 12:35:26 INFO mapred.JobClient:     Map output materialized bytes=206
+14/03/11 12:35:26 INFO mapred.JobClient:     Map input records=6040
+14/03/11 12:35:26 INFO mapred.JobClient:     Reduce shuffle bytes=206
+14/03/11 12:35:26 INFO mapred.JobClient:     Spilled Records=20
+14/03/11 12:35:26 INFO mapred.JobClient:     Map output bytes=180
+14/03/11 12:35:26 INFO mapred.JobClient:     CPU time spent (ms)=1740
+14/03/11 12:35:26 INFO mapred.JobClient:     Total committed heap usage (bytes)=500957184
+14/03/11 12:35:26 INFO mapred.JobClient:     Combine input records=0
+14/03/11 12:35:26 INFO mapred.JobClient:     SPLIT_RAW_BYTES=116
+14/03/11 12:35:26 INFO mapred.JobClient:     Reduce input records=10
+14/03/11 12:35:26 INFO mapred.JobClient:     Reduce input groups=1
+14/03/11 12:35:26 INFO mapred.JobClient:     Combine output records=0
+14/03/11 12:35:26 INFO mapred.JobClient:     Physical memory (bytes) snapshot=376250368
+14/03/11 12:35:26 INFO mapred.JobClient:     Reduce output records=10
+14/03/11 12:35:26 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=2105147392
+14/03/11 12:35:26 INFO mapred.JobClient:     Map output records=10
+
+{cs6360:~} hadoop fs -cat /user/vxg120430/output1/*
+4169	50.0	M	2314
+1680	25.0	M	1850
+4277	35.0	M	1743
+1941	35.0	M	1595
+1181	35.0	M	1521
+889	45.0	M	1518
+3618	56.0	M	1344
+2063	25.0	M	1323
+1150	25.0	F	1302
+1015	35.0	M	1286
+
+Q5. Please use reduce side join for the following query :
+=========================================================
+List all the movies with its genre where the movie genre is Action or Drama and the average movie rating is in between 4.4-4.7 and only the male users rate the movie.(This is reduce side join).
+
+{cs6360:~} hadoop jar MovieJoinAnalyzer.jar /Spring2014_HW-1/input_HW-1/users.dat /Spring2014_HW-1/input_HW-1/movies.dat /Spring2014_HW-1/input_HW-1/ratings.dat MovieGenre /user/vxg120430/output2 /user/vxg120430/output3
+14/03/11 16:28:21 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/03/11 16:28:21 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 16:28:21 INFO util.NativeCodeLoader: Loaded the native-hadoop library
+14/03/11 16:28:21 WARN snappy.LoadSnappy: Snappy native library not loaded
+14/03/11 16:28:21 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 16:28:21 INFO mapred.JobClient: Running job: job_201402251659_6340
+14/03/11 16:28:22 INFO mapred.JobClient:  map 0% reduce 0%
+14/03/11 16:28:26 INFO mapred.JobClient:  map 50% reduce 0%
+14/03/11 16:28:30 INFO mapred.JobClient:  map 100% reduce 0%
+14/03/11 16:28:33 INFO mapred.JobClient:  map 100% reduce 33%
+14/03/11 16:28:37 INFO mapred.JobClient:  map 100% reduce 100%
+14/03/11 16:28:37 INFO mapred.JobClient: Job complete: job_201402251659_6340
+14/03/11 16:28:37 INFO mapred.JobClient: Counters: 30
+14/03/11 16:28:37 INFO mapred.JobClient:   Job Counters 
+14/03/11 16:28:37 INFO mapred.JobClient:     Launched reduce tasks=1
+14/03/11 16:28:37 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=9947
+14/03/11 16:28:37 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/03/11 16:28:37 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/03/11 16:28:37 INFO mapred.JobClient:     Rack-local map tasks=1
+14/03/11 16:28:37 INFO mapred.JobClient:     Launched map tasks=2
+14/03/11 16:28:37 INFO mapred.JobClient:     Data-local map tasks=1
+14/03/11 16:28:37 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=10516
+14/03/11 16:28:37 INFO mapred.JobClient:   File Output Format Counters 
+14/03/11 16:28:37 INFO mapred.JobClient:     Bytes Written=5070975
+14/03/11 16:28:37 INFO mapred.JobClient:   FileSystemCounters
+14/03/11 16:28:37 INFO mapred.JobClient:     FILE_BYTES_READ=41161885
+14/03/11 16:28:37 INFO mapred.JobClient:     HDFS_BYTES_READ=24729036
+14/03/11 16:28:37 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=61941533
+14/03/11 16:28:37 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=5070975
+14/03/11 16:28:37 INFO mapred.JobClient:   File Input Format Counters 
+14/03/11 16:28:37 INFO mapred.JobClient:     Bytes Read=0
+14/03/11 16:28:37 INFO mapred.JobClient:   Map-Reduce Framework
+14/03/11 16:28:37 INFO mapred.JobClient:     Map output materialized bytes=20606530
+14/03/11 16:28:37 INFO mapred.JobClient:     Map input records=1006249
+14/03/11 16:28:37 INFO mapred.JobClient:     Reduce shuffle bytes=20606530
+14/03/11 16:28:37 INFO mapred.JobClient:     Spilled Records=3009289
+14/03/11 16:28:37 INFO mapred.JobClient:     Map output bytes=18597438
+14/03/11 16:28:37 INFO mapred.JobClient:     CPU time spent (ms)=11840
+14/03/11 16:28:37 INFO mapred.JobClient:     Total committed heap usage (bytes)=942276608
+14/03/11 16:28:37 INFO mapred.JobClient:     Combine input records=0
+14/03/11 16:28:37 INFO mapred.JobClient:     SPLIT_RAW_BYTES=537
+14/03/11 16:28:37 INFO mapred.JobClient:     Reduce input records=1004540
+14/03/11 16:28:37 INFO mapred.JobClient:     Reduce input groups=6040
+14/03/11 16:28:37 INFO mapred.JobClient:     Combine output records=0
+14/03/11 16:28:37 INFO mapred.JobClient:     Physical memory (bytes) snapshot=835960832
+14/03/11 16:28:37 INFO mapred.JobClient:     Reduce output records=753769
+14/03/11 16:28:37 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=3155435520
+14/03/11 16:28:37 INFO mapred.JobClient:     Map output records=1004540
+14/03/11 16:28:37 WARN mapred.JobClient: Use GenericOptionsParser for parsing the arguments. Applications should implement Tool for the same.
+14/03/11 16:28:37 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 16:28:37 INFO input.FileInputFormat: Total input paths to process : 1
+14/03/11 16:28:37 INFO mapred.JobClient: Running job: job_201402251659_6342
+14/03/11 16:28:38 INFO mapred.JobClient:  map 0% reduce 0%
+14/03/11 16:28:43 INFO mapred.JobClient:  map 50% reduce 0%
+14/03/11 16:28:46 INFO mapred.JobClient:  map 100% reduce 0%
+14/03/11 16:28:50 INFO mapred.JobClient:  map 100% reduce 33%
+14/03/11 16:28:52 INFO mapred.JobClient:  map 100% reduce 100%
+14/03/11 16:28:52 INFO mapred.JobClient: Job complete: job_201402251659_6342
+14/03/11 16:28:52 INFO mapred.JobClient: Counters: 30
+14/03/11 16:28:52 INFO mapred.JobClient:   Job Counters 
+14/03/11 16:28:52 INFO mapred.JobClient:     Launched reduce tasks=1
+14/03/11 16:28:52 INFO mapred.JobClient:     SLOTS_MILLIS_MAPS=8913
+14/03/11 16:28:52 INFO mapred.JobClient:     Total time spent by all reduces waiting after reserving slots (ms)=0
+14/03/11 16:28:52 INFO mapred.JobClient:     Total time spent by all maps waiting after reserving slots (ms)=0
+14/03/11 16:28:52 INFO mapred.JobClient:     Rack-local map tasks=1
+14/03/11 16:28:52 INFO mapred.JobClient:     Launched map tasks=2
+14/03/11 16:28:52 INFO mapred.JobClient:     Data-local map tasks=1
+14/03/11 16:28:52 INFO mapred.JobClient:     SLOTS_MILLIS_REDUCES=9020
+14/03/11 16:28:52 INFO mapred.JobClient:   File Output Format Counters 
+14/03/11 16:28:52 INFO mapred.JobClient:     Bytes Written=1279
+14/03/11 16:28:52 INFO mapred.JobClient:   FileSystemCounters
+14/03/11 16:28:52 INFO mapred.JobClient:     FILE_BYTES_READ=13669917
+14/03/11 16:28:52 INFO mapred.JobClient:     HDFS_BYTES_READ=5242823
+14/03/11 16:28:52 INFO mapred.JobClient:     FILE_BYTES_WRITTEN=20730285
+14/03/11 16:28:52 INFO mapred.JobClient:     HDFS_BYTES_WRITTEN=1279
+14/03/11 16:28:52 INFO mapred.JobClient:   File Input Format Counters 
+14/03/11 16:28:52 INFO mapred.JobClient:     Bytes Read=0
+14/03/11 16:28:52 INFO mapred.JobClient:   Map-Reduce Framework
+14/03/11 16:28:52 INFO mapred.JobClient:     Map output materialized bytes=6885984
+14/03/11 16:28:52 INFO mapred.JobClient:     Map input records=757652
+14/03/11 16:28:52 INFO mapred.JobClient:     Reduce shuffle bytes=6885984
+14/03/11 16:28:52 INFO mapred.JobClient:     Spilled Records=2265319
+14/03/11 16:28:52 INFO mapred.JobClient:     Map output bytes=5374422
+14/03/11 16:28:52 INFO mapred.JobClient:     CPU time spent (ms)=7840
+14/03/11 16:28:52 INFO mapred.JobClient:     Total committed heap usage (bytes)=909574144
+14/03/11 16:28:52 INFO mapred.JobClient:     Combine input records=0
+14/03/11 16:28:52 INFO mapred.JobClient:     SPLIT_RAW_BYTES=540
+14/03/11 16:28:52 INFO mapred.JobClient:     Reduce input records=755775
+14/03/11 16:28:52 INFO mapred.JobClient:     Reduce input groups=3807
+14/03/11 16:28:52 INFO mapred.JobClient:     Combine output records=0
+14/03/11 16:28:52 INFO mapred.JobClient:     Physical memory (bytes) snapshot=725467136
+14/03/11 16:28:52 INFO mapred.JobClient:     Reduce output records=22
+14/03/11 16:28:52 INFO mapred.JobClient:     Virtual memory (bytes) snapshot=3155742720
+14/03/11 16:28:52 INFO mapred.JobClient:     Map output records=755775
+{cs6360:~} hadoop fs -cat /user/vxg120430/output3/* 
+53	Lamerica (1994)	Drama	4.666666666666667
+260	Star Wars: Episode IV - A New Hope (1977)	Action|Adventure|Fantasy|Sci-Fi	4.495307167235495
+318	Shawshank Redemption, The (1994)	Drama	4.560625
+527	Schindler's List (1993)	Drama|War	4.49141503848431
+557	Mamma Roma (1962)	Drama	4.5
+578	Hour of the Pig, The (1993)	Drama|Mystery	4.5
+858	Godfather, The (1972)	Action|Crime|Drama	4.583333333333333
+912	Casablanca (1942)	Drama|Romance|War	4.461340206185567
+923	Citizen Kane (1941)	Drama	4.407894736842105
+1178	Paths of Glory (1957)	Drama|War	4.485148514851486
+1193	One Flew Over the Cuckoo's Nest (1975)	Drama	4.418423106947697
+1198	Raiders of the Lost Ark (1981)	Action|Adventure	4.520597322348094
+1221	Godfather: Part II, The (1974)	Action|Crime|Drama	4.437777777777778
+1250	Bridge on the River Kwai, The (1957)	Drama|War	4.401505646173149
+1664	N�nette et Boni (1996)	Drama	4.5
+1795	Callej�n de los milagros, El (1995)	Drama	4.5
+2019	Seven Samurai (The Magnificent Seven) (Shichinin no samurai) (1954)	Action|Drama	4.576628352490421
+2480	Dry Cleaning (Nettoyage � sec) (1997)	Drama	4.5
+2503	Apple, The (Sib) (1998)	Drama	4.6
+2905	Sanjuro (1962)	Action|Adventure	4.639344262295082
+3030	Yojimbo (1961)	Comedy|Drama|Western	4.402116402116402
+3410	Soft Fruit (1999)	Comedy|Drama	4.4
