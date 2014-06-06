@@ -52,7 +52,7 @@ public class MovieRatingJoin {
 			String line = value.toString();
 			String tokens[] = line.split("::");
 			if(tokens.length == 4) {
-				if(tokens[0].matches("^\\d+$") && tokens[1].matches("^\\d+$")) {
+				if(tokens[0].matches("^\\d+$") && tokens[1].matches("^\\d+$") && tokens[2].matches("^\\d+$")) {
 					int tempUserId = Integer.parseInt(tokens[0]);
 					context.write(new IntWritable(tempUserId), new Text("R" + tokens[0] + "::" + tokens[1] + "::" + tokens[2]));
 				}

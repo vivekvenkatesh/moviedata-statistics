@@ -1,0 +1,32 @@
+===================
+HIVE SCRIPTS README
+===================
+
+Q5. Using Hive script, find top 10 average rated “Action" movies with descending order of rating. (Show the create table command, load from local, and the Hive query).
+
+Q6. Using Hive script, List all the movies with its genre where the movie genre is Action or Drama and the average movie rating is in between 4.4 - 4.7 and only the male users rate the movie. (Show the create table command, load from local, and the Hive query).
+
+Q7. Dataset:
+We will use the movie datasets here. The datasets are located under /tmp/HW_3_Data/partition (the file names are 2009, 2010 and 2011) in the Local UNIX System. Please use this folder and don’t copy to any other folder on the server. The path contains three files for the partitioned years 2009, 2010 and 2011. The datasets are semi-colon (;) separated and each line has the following 3 columns MovieID;Title;Genres
+
+Requirement:
+Using Hive script, create one table partitioned by year. (Show the create table one command, load from local three commands, and one Hive query that selects all columns from the table for the virtual column year of 2009).
+
+Q8. Requirement:
+Create three tables that have three columns each (MovieID, MovieName, Genre). Each table will represent a year. The three years are 2009, 2010 and 2011.
+
+Using Hive multi-table insert, insert values from the table you created in Q7 to these three tables (each table should have names of movies e.g. movies_2009 etc. for the specified year).
+
+Q9.
+
+Write a UDF(User Define Function) FORMAT_GENRE in Hive which basically formats the genre in movies_new in the following:
+Before formatting: Children's
+After formatting: Children's
+
+Before formatting: Animation|Children's
+After formatting: Animation, and Children's
+
+Before formatting: Adventure|Animation|Children's
+After formatting: Adventure, Animation, and Children's
+
+Using Hive script, use the FORMAT_GENRE function on movies_new dataset and print the movie name with its genre(s).

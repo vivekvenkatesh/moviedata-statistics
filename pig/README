@@ -1,0 +1,23 @@
+==================
+PIG SCRIPTS README
+==================
+
+Q1. Using Pig Latin script, list the unique userid of female users whose age between 20 - 30 and who has rated the highest rated Action AND War movies. (You should consider all movies that has at Action AND War both in its genre list.)
+
+Consider average rating to calculate the highest rated movies. While finding the Action and War movies, you should count all users not only the female users.
+
+Q2. Using Pig Latin script, Implement cogroup command on UserID for the datasets ratings_new and users_new.
+
+Q3. Repeat Question 2 (implement join) with cogroup commands.
+
+Q4. Write a UDF(User Define Function) FORMAT_GENRE in Pig which basically formats the genre in movies_new in the following:
+Before formatting: Children's
+After formatting: Children's
+
+Before formatting: Animation|Children's
+After formatting: Children's and Animation
+
+Before formatting: Adventure|Animation|Children's
+After formatting: Children's, Adventure and Animation
+
+Using Pig Latin script, use the FORMAT_GENRE function on movies_new dataset and print the movie name with its genre(s).

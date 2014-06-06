@@ -1,0 +1,7 @@
+drop table ratings; 
+drop table movies;
+drop table users;
+drop table moviepartition; 
+drop table movies_2009;
+drop table movies_2010;
+drop table movies_2011; 

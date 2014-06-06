@@ -1,0 +1,5 @@
+CREATE TABLE movies(mid INT,title STRING, genre STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n";
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/movies_new' OVERWRITE INTO TABLE movies;
+add jar /home/004/v/vx/vxg120430/FormatGenreHive.jar;       
+create temporary function my_format_genre as 'FormatGenre'; 
+select mid, title, my_format_genre(genre) from movies;

@@ -1,0 +1,8 @@
+CREATE TABLE ratings(userid INT, mid INT, rating INT, timestamp1 STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n" ; 
+
+CREATE TABLE movies(mid INT,title STRING, genre STRING) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n";
+
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/ratings_new' OVERWRITE INTO TABLE ratings;
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/movies_new' OVERWRITE INTO TABLE movies; 
+
+select /*+ MAPJOIN(fin) */ mv.mid, mv.title, mv.genre, fin.avgr FROM (select av.mid, av.avgr FROM (select /*+ MAPJOIN(m) */ r.mid as mid, avg(r.rating) as avgr FROM (select mid from movies where genre LIKE '%Action%') m JOIN ratings r ON (r.mid = m.mid) group by r.mid) av ORDER BY av.avgr DESC LIMIT 10) fin JOIN movies mv ON (mv.mid == fin.mid) ORDER BY fin.avgr DESC; 

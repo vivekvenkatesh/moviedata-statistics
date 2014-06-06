@@ -14,10 +14,11 @@ import org.apache.hadoop.io.WritableComparable;
 
 public class UserTuple implements WritableComparable<UserTuple>{
 
-	int userId;
-	double age; 
-	char gender;
-	int ratingsCount; 
+	private int userId;
+	private double age; 
+	private char gender;
+	private int ratingsCount;
+	 
 	
 	public UserTuple() {
 		userId = 0;
@@ -122,5 +123,6 @@ public class UserTuple implements WritableComparable<UserTuple>{
 	public String toString() {
 		return (userId + "\t" + age + "\t" + gender + "\t" + ratingsCount);
 	}
-
+	
+	
 }

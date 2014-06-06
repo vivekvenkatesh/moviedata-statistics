@@ -1,0 +1,7 @@
+CREATE TABLE movies_2009 (MovieId INT, Title STRING, Genres STRING) partitioned by (year INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n" ;;
+CREATE TABLE movies_2010 (MovieId INT, Title STRING, Genres STRING) partitioned by (year INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n" ;;
+CREATE TABLE movies_2011 (MovieId INT, Title STRING, Genres STRING) partitioned by (year INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n" ;;
+FROM (SELECT * from moviepartition) mp
+INSERT OVERWRITE TABLE movies_2009 PARTITION(year=2009) SELECT mp.MovieID, mp.Title, mp.Genres where mp.year=2009
+INSERT OVERWRITE TABLE movies_2010 PARTITION(year=2010) SELECT mp.MovieID, mp.Title, mp.Genres where mp.year=2010
+INSERT OVERWRITE TABLE movies_2011 PARTITION(year=2011) SELECT mp.MovieID, mp.Title, mp.Genres where mp.year=2011;

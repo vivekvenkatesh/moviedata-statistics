@@ -1,0 +1,7 @@
+CREATE TABLE moviepartition (MovieID INT, Title STRING, Genres STRING) partitioned by (year INT) ROW FORMAT DELIMITED FIELDS TERMINATED BY "\;" LINES TERMINATED BY "\n" ;
+
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/partition/2009' INTO table moviepartition Partition (year=2009);
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/partition/2010' INTO table moviepartition Partition (year=2010);
+LOAD DATA local INPATH '/tmp/Spring2014_HW-3_Hive/partition/2011' INTO table moviepartition Partition (year=2011);
+
+select * from moviepartition where year = 2009; 
